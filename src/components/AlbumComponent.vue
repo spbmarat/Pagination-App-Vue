@@ -22,7 +22,7 @@
         </div>
 
          <div class="jumbotron text-center">
-            <button type="button" class=" btn btn-sm btn-outline-secondary" v-for="pageNumber in pages" v-bind:key ="pageNumber.id"  @click="page = pageNumber"> {{pageNumber}} </button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" v-for="pageNumber in pages" v-bind:key ="pageNumber.id"  @click="page = pageNumber"> {{pageNumber}} </button>
           </div>
       </div>
     </div>
