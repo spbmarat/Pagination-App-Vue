@@ -1,18 +1,5 @@
 <template>
   <main role="main" id="pagination-app">
-    <!--   <section >
-      <div class="container">
-        <h3 class="jumbotron-heading">Pagination With Vuejs</h3>
-              <p>
-          <button
-            type="button"
-            @click="getAlbums"
-            class="btn btn-lg btn-outline-secondary"
-          ></button>
-        </p> 
-      </div>
-    </section>-->
-
     <h2 class="jumbotron text-center">Albums</h2>
     <div class="container" v-cloak>
       <div class="container">

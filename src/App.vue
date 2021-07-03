@@ -2,7 +2,7 @@
   <!-- <img alt="App logo" src="./assets/logo.jpg">
   <HeaderComponent msg="Hello pagination!"/> -->
   <PaginationComponent/>
-  <AlbumComponent/>
+  <AlbumComponent albumNum="3"/>
 
 </template>
 
