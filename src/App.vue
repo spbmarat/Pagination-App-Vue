@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <!-- <img alt="App logo" src="./assets/logo.jpg">
+  <HeaderComponent msg="Hello pagination!"/> -->
+  <PaginationComponent/>
+  <AlbumComponent/>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/style.css'
+import './assets/bootstrap.min.css'
+//import HeaderComponent from './components/HeaderComponent.vue'
+import PaginationComponent from './components/PaginationComponent.vue'
+import AlbumComponent from './components/AlbumComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+  //  HeaderComponent,
+    PaginationComponent,
+    AlbumComponent
   }
 }
 </script>
