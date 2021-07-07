@@ -2,9 +2,9 @@
   <div class="jumbotron text-center">
     <button
       type="button"
-      class="btn btn-sm btn-outline-secondary"
       v-for="pageNumber in pages"
       v-bind:key="pageNumber.id"
+      :class="getButtonClassAndActiveButton(pageNumber)"
       @click="
         pageNum = pageNumber;
         this.$emit('childToParent', pageNum);
@@ -19,12 +19,13 @@ export default {
   name: "PaginationComponent",
   props: {
     pageNumToRender: Number,
+    perPage: Number,
     listOfAllAlbums: Object,
   },
   emits: ["childToParent"],
   data() {
     return {
-      perPage: 9,
+      isPressed: [],
       pages: [],
     };
   },
@@ -35,11 +36,12 @@ export default {
         this.pages.push(index);
       }
     },
-    returnListOfAlbumsForPage() {
-      let perPage = this.perPage;
-      let from = this.pageNumToRender * (perPage - 1);
-      let to = this.pageNumToRender * perPage;
-      return this.listOfAllAlbums.slice(from, to);
+    getButtonClassAndActiveButton(index) {
+      if (index == this.pageNum) {
+        return "pressed";
+      } else {
+        return "btn btn-sm btn-outline-secondary";
+      }
     },
   },
   watch: {

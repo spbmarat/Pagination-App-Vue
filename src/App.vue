@@ -1,10 +1,12 @@
 <template>
   <OnePageOfAlbumsListComponent
     :pageNumToRender="this.pageNum"
+    :perPage="this.perPage"
     :listOfAllAlbums="albums"
   />
   <PaginationComponent
     :pageNumToRender="this.pageNum"
+    :perPage="this.perPage"
     :listOfAllAlbums="albums"
     @childToParent="setPageNum($event)"
   />
@@ -29,7 +31,7 @@ export default {
     return {
       pageNum: 1,
       albums: [],
-      albums2: [],
+      perPage: 9,
       baseUrl: "https://jsonplaceholder.typicode.com/",
     };
   },
