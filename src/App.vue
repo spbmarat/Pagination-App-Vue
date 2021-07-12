@@ -1,35 +1,44 @@
 <template>
+  <router-view></router-view>
   <OnePageOfAlbumsListComponent
+    v-if="!albumNum"
     :pageNumToRender="this.pageNum"
     :perPage="this.perPage"
     :listOfAllAlbums="albums"
-  />
-  <PaginationComponent
+    @childToParentAlbumNumber="setAlbumNum($event)"
+  /> 
+  <p>HHHHHHHHHHH {{ albumNum }}</p>
+<!--   <AlbumComponent v-if="albumNum" :albumNum="(this.albumNum = albumNum)" />
+ -->  
+ <PhotoComponent v-if="albumNum" :albumNum="(this.albumNum = albumNum)" />
+ <PaginationComponent
+    v-if="!albumNum"
     :pageNumToRender="this.pageNum"
     :perPage="this.perPage"
     :listOfAllAlbums="albums"
-    @childToParent="setPageNum($event)"
+    @childToParentPageNumber="setPageNum($event)"
   />
-  <AlbumComponent albumNum="3" />
 </template>
 
 <script>
 import "./assets/style.css";
 import "./assets/bootstrap.min.css";
 import OnePageOfAlbumsListComponent from "./components/OnePageOfAlbumsListComponent.vue";
-import PaginationComponent from "./components/PaginationComponent.vue";
-import AlbumComponent from "./components/AlbumComponent.vue";
-
+ import PaginationComponent from "./components/PaginationComponent.vue";
+import ApiService from "./services/ApiService.js" 
+ /* import AlbumComponent from "./components/AlbumComponent.vue";
+ */
 export default {
   name: "App",
   components: {
-    OnePageOfAlbumsListComponent,
+     OnePageOfAlbumsListComponent,
     PaginationComponent,
-    AlbumComponent,
+    /* AlbumComponent, */
   },
   data() {
     return {
       pageNum: 1,
+      albumNum: 0,
       albums: [],
       perPage: 9,
       baseUrl: "https://jsonplaceholder.typicode.com/",
@@ -52,10 +61,12 @@ export default {
     setPageNum(pagenum) {
       this.pageNum = pagenum;
     },
+    setAlbumNum(pagenum) {
+      this.albumNum = pagenum;
+    },
   },
   mounted() {
-    this.getListOfAlbums();
-    this.setAlbumsFromComponent();
+    ApiService.getAlbums();
   },
 };
 </script>

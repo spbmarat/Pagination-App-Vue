@@ -6,8 +6,7 @@
       v-bind:key="pageNumber.id"
       :class="getButtonClassAndActiveButton(pageNumber)"
       @click="
-        pageNum = pageNumber;
-        this.$emit('childToParent', pageNum);
+        this.$emit('childToParentPageNumber', pageNumber);
       "
     >
       {{ pageNumber }}
@@ -22,7 +21,7 @@ export default {
     perPage: Number,
     listOfAllAlbums: Object,
   },
-  emits: ["childToParent"],
+  emits: ["childToParentPageNumber"],
   data() {
     return {
       isPressed: [],
@@ -37,8 +36,8 @@ export default {
       }
     },
     getButtonClassAndActiveButton(index) {
-      if (index == this.pageNum) {
-        return "pressed";
+      if (index == this.pageNumToRender) {
+        return "btn btn-sm pressed";
       } else {
         return "btn btn-sm btn-outline-secondary";
       }

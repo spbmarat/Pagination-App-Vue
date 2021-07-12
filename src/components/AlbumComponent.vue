@@ -1,6 +1,6 @@
 <template>
   <main role="main" id="album-viewer">
-    <h2 class="jumbotron text-center">Album photos</h2>
+    <h2 class="jumbotron text-center">Album {{albumNum}} photos</h2>
     <div class="container" v-cloak>
       <div class="container">
         <div class="row">
@@ -10,21 +10,21 @@
             v-bind:key="photo.id"
           >
             <div class="card mb-4 box-shadow post-cards">
+            <router-link :to="'/album/'+ albumNum +'/photo/'+ photo.id">Open Photo{{photo.id}}</router-link>
+<router-view></router-view>
+           <a
+                  v-bind:href="
+                    photo.url"
+                >
               <img v-bind:src="photo.thumbnailUrl"
                 class="card-img-top"
                 alt="Card image cap"
               />
               <div class="card-body">
-                <a
-                  v-bind:href="
-                    'https://jsonplaceholder.typicode.com/albums/' +
-                    albumNum +
-                    '/photos'
-                  "
-                >
-                  <h5 class="capitalize">{{ photo.title }}</h5></a
-                >
+     
+                  <h5 class="capitalize">{{ photo.title }}</h5>
               </div>
+              </a>
             </div>
           </div>
         </div>
@@ -47,10 +47,10 @@
 
 <script>
 export default {
- props: ["albumNum"],
-  /*   props: {
+  props: ["albumNum"], 
+/*     props: {
     albumNum: Number
-  }, */
+  }, */ 
   data() {
     return {
       photos: [],

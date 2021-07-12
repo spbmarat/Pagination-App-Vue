@@ -1,3 +1,4 @@
+
 <template>
   <main role="main" id="album-viewer">
     <h2 class="jumbotron text-center">
@@ -14,16 +15,17 @@
             )"
             v-bind:key="album.id"
           >
-            <div class="card mb-4 box-shadow post-cards">
-  <!--                        <img
-                src="../img/album_placeholder.png"
-                class="card-img-top"
-                alt="Card image cap"
-              />  -->
-              <div class="card-body">
-                <h5 class="capitalize">{{ album.title }}</h5>
+            <router-link :to="'/album/'+ album.id">Open Album {{album.id}}</router-link>
+           <!--  <a :href="'https://jsonplaceholder.typicode.com/albums/' +album.id + '/photos' "> -->
+            <!-- <button  type="button" class = "btn btn-sm btn-outline-secondary"
+            @click="this.$emit('childToParentAlbumNumber', album.id)"> -->
+              <div class="card mb-4 box-shadow post-cards">
+                <div class="card-body">
+                  <h5 class="capitalize">{{ album.title }}</h5>
+                </div>
               </div>
-            </div>
+            <!-- </button> -->
+          <!--   </a> -->
           </div>
         </div>
       </div>
@@ -38,9 +40,9 @@ export default {
     perPage: Number,
     listOfAllAlbums: Object,
   },
+  emits: ["childToParentAlbumNumber"],
   data() {
-    return {
-    };
+    return {};
   },
 };
 </script>
