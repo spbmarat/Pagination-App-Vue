@@ -5,9 +5,7 @@
       v-for="pageNumber in pages"
       v-bind:key="pageNumber.id"
       :class="getButtonClassAndActiveButton(pageNumber)"
-      @click="
-        this.$emit('childToParentPageNumber', pageNumber);
-      "
+      @click="this.$emit('childToParentPageNumber', pageNumber)"
     >
       {{ pageNumber }}
     </button>
@@ -18,8 +16,7 @@ export default {
   name: "PaginationComponent",
   props: {
     pageNumToRender: Number,
-    perPage: Number,
-    listOfAllAlbums: Object,
+    listForPagination: Object,
   },
   emits: ["childToParentPageNumber"],
   data() {
@@ -30,7 +27,9 @@ export default {
   },
   methods: {
     setPages() {
-      let numberOfPages = Math.ceil(this.listOfAllAlbums.length / this.perPage);
+      let numberOfPages = Math.ceil(
+        this.listForPagination.length / this.$apiService.perPage
+      );
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);
       }
@@ -44,9 +43,11 @@ export default {
     },
   },
   watch: {
-    listOfAllAlbums() {
+    listForPagination() {
       this.setPages();
     },
+  },
+  mounted() {
   },
 };
 </script>

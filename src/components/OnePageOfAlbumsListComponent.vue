@@ -2,47 +2,65 @@
 <template>
   <main role="main" id="album-viewer">
     <h2 class="jumbotron text-center">
-      List of albums, page {{ this.pageNumToRender }}
+      List of albums, page {{ this.pageNum }}
     </h2>
     <div class="container" v-cloak>
       <div class="container">
         <div class="row">
           <div
             class="col-md-4"
-            v-for="album in this.listOfAllAlbums.slice(
-              this.perPage * (this.pageNumToRender - 1),
-              this.pageNumToRender * this.perPage
+            v-for="album in albums.slice(
+              this.$apiService.perPage * (this.pageNum - 1),
+              this.pageNum * this.$apiService.perPage
             )"
             v-bind:key="album.id"
           >
-            <router-link :to="'/album/'+ album.id">Open Album {{album.id}}</router-link>
-           <!--  <a :href="'https://jsonplaceholder.typicode.com/albums/' +album.id + '/photos' "> -->
-            <!-- <button  type="button" class = "btn btn-sm btn-outline-secondary"
-            @click="this.$emit('childToParentAlbumNumber', album.id)"> -->
-              <div class="card mb-4 box-shadow post-cards">
-                <div class="card-body">
-                  <h5 class="capitalize">{{ album.title }}</h5>
-                </div>
+            <div class="card mb-4 box-shadow post-cards">
+              <div class="card-header">
+                <router-link :to="'/album' + album.id"
+                  >Open Album {{ album.id }}</router-link
+                >
               </div>
+              <div class="card-body">
+                <h5 class="capitalize">{{ album.title }}</h5>
+              </div>
+            </div>
             <!-- </button> -->
-          <!--   </a> -->
+            <!--   </a> -->
           </div>
         </div>
       </div>
     </div>
+    <PaginationComponent
+      :pageNumToRender="this.pageNum"
+      :listForPagination="this.albums"
+      @childToParentPageNumber="setPageNum($event)"
+    />
   </main>
 </template>
 
 <script>
+import PaginationComponent from "../components/PaginationComponent.vue";
+
 export default {
-  props: {
-    pageNumToRender: Number,
-    perPage: Number,
-    listOfAllAlbums: Object,
+  name: "Alc",
+  components: {
+    PaginationComponent,
   },
   emits: ["childToParentAlbumNumber"],
   data() {
-    return {};
+    return {
+      pageNum: 1,
+      albums: [],
+    };
+  },
+  methods: {
+    setPageNum(pagenum) {
+      this.pageNum = pagenum;
+    },
+  },
+  mounted() {
+    this.$apiService.getAlbums().then((albums) => (this.albums = albums));
   },
 };
 </script>

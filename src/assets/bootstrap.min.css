@@ -2530,7 +2530,6 @@ a.btn.disabled, fieldset:disabled a.btn {
 .pressed {
     color: #fff;
     background-color: #2876b9;
-    box-shadow: 0 0 0 .2rem rgba(108, 117, 125, .5)
 }
 
 .btn-outline-secondary.disabled, .btn-outline-secondary:disabled {
