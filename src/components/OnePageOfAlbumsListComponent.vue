@@ -9,15 +9,13 @@
         <div class="row">
           <div
             class="col-md-4"
-            v-for="album in albums.slice(
-              this.$apiService.perPage * (this.pageNum - 1),
-              this.pageNum * this.$apiService.perPage
-            )"
+            v-for="album in slicedList"
             v-bind:key="album.id"
           >
             <div class="card mb-4 box-shadow post-cards">
               <div class="card-header">
-                <router-link :to="'/album' + album.id"
+                <router-link
+                  :to="{ name: 'Album', params: { albumNum: album.id } }"
                   >Open Album {{ album.id }}</router-link
                 >
               </div>
@@ -25,8 +23,6 @@
                 <h5 class="capitalize">{{ album.title }}</h5>
               </div>
             </div>
-            <!-- </button> -->
-            <!--   </a> -->
           </div>
         </div>
       </div>
@@ -41,6 +37,7 @@
 
 <script>
 import PaginationComponent from "../components/PaginationComponent.vue";
+import { PER_PAGE } from "../constants";
 
 export default {
   name: "Alc",
@@ -57,6 +54,14 @@ export default {
   methods: {
     setPageNum(pagenum) {
       this.pageNum = pagenum;
+    },
+  },
+  computed: {
+    slicedList() {
+      return this.albums.slice(
+        PER_PAGE * (this.pageNum - 1),
+        this.pageNum * PER_PAGE
+      );
     },
   },
   mounted() {

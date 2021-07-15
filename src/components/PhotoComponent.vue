@@ -1,23 +1,15 @@
 <template>
-
-
-              <img src="https://via.placeholder.com/600/3a5c29"
-                class="card-img-top"
-                alt="Card image cap"
-              />
+  <div class="text-center">
+    <h5>Photo {{ this.photoNum }}</h5>
+    <img :src="this.photoUrl" class="img-thumbnail" alt="Photo" />
+  </div>
 </template>
 
 <script>
 export default {
-/*   props: {["photoNum"],
- */   
- props: {
+  props: {
     photoNum: String,
     photoUrl: String,
-  }, 
-/*     props: {
-    photoNum: Number
-  }, */ 
-
+  },
 };
 </script>

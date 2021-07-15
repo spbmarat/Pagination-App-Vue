@@ -4,23 +4,19 @@ import * as VueRouter from 'vue-router'
 import App from "./App.vue"
 import OnePageOfAlbumsListComponent from "./components/OnePageOfAlbumsListComponent.vue";
 import AlbumComponent from "./components/AlbumComponent.vue";
-// eslint-disable-next-line no-unused-vars
 import PhotoComponent from "./components/PhotoComponent.vue";
 import ApiService from "./services/ApiService.js"
 
 var routes = [
   {
-  path: '/', component: OnePageOfAlbumsListComponent, name: "Alc",
-},
-{
-  path: '/album:albumNum', component: AlbumComponent, props: true,
-/*   children: [
-    {
-      path: 'photo:photoNum',
-      component: PhotoComponent, props: true,
-    },
-  ] */
-},
+    path: '/', component: OnePageOfAlbumsListComponent, 
+  },
+  {
+    path: '/album/:albumNum', name: 'Album', component: AlbumComponent, props: true,
+  },
+  {
+    path: '/album/:albumNum/photo/:photoNum', name:'Photo', component: PhotoComponent, props: true,
+  },
 ];
 
 const router = VueRouter.createRouter({

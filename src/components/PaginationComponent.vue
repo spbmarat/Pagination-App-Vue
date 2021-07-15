@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+import { PER_PAGE } from "../constants";
+
 export default {
   name: "PaginationComponent",
   props: {
@@ -27,9 +29,7 @@ export default {
   },
   methods: {
     setPages() {
-      let numberOfPages = Math.ceil(
-        this.listForPagination.length / this.$apiService.perPage
-      );
+      let numberOfPages = Math.ceil(this.listForPagination.length / PER_PAGE);
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);
       }
@@ -47,7 +47,6 @@ export default {
       this.setPages();
     },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>

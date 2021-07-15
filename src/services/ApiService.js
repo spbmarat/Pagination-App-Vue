@@ -1,16 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 export default class ApiService {
   baseUrl = "https://jsonplaceholder.typicode.com/";
-  perPage = 9;
-  pageNumtoRender = 1;
-
 
   constructor() {
     this.albums = [];
     this.photos = [];
   }
-
-
 
   getAlbums() {
     if (this.albums.length) {
@@ -19,20 +14,12 @@ export default class ApiService {
       });
     }
     else {
-      /* fetch(this.baseUrl + "albums")
-       .then(response => response.json())
-       .then(albums => {
-         this.albums = albums;
-         return albums;
-       }) */
       return fetch(this.baseUrl + "albums")
         .then((response) => {
           return response.json();
         })
         .then((albums) => {
           this.albums = albums;
-          console.log(this.albums);
-          console.log("Hello");
           return albums
         })
         .catch((response) => {
@@ -54,13 +41,14 @@ export default class ApiService {
         })
         .then((photos) => {
           this.photos = photos;
-          console.log(this.photos);
-          console.log("photos");
           return photos
         })
         .catch((response) => {
           console.log(response);
         });
     }
+  }
+  resetPhotos() {
+    this.photos = [];
   }
 }
