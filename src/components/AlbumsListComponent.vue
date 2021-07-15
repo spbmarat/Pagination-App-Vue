@@ -1,0 +1,70 @@
+
+<template>
+  <main role="main" id="album-viewer">
+    <h2 class="jumbotron text-center">
+      List of albums, page {{ this.pageNum }}
+    </h2>
+    <div class="container" v-cloak>
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-md-4"
+            v-for="album in slicedList"
+            v-bind:key="album.id"
+          >
+            <div class="card mb-4 box-shadow post-cards">
+              <div class="card-header">
+                <router-link
+                  :to="{ name: 'Album', params: { albumNum: album.id } }"
+                  >Open Album {{ album.id }}</router-link
+                >
+              </div>
+              <div class="card-body">
+                <h5 class="capitalize">{{ album.title }}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <PaginationComponent
+      :activePage="this.pageNum"
+      :lengthOfListForPagination="this.albums.length"
+      @newActivePageFromPagination="setPageNum($event)"
+    />
+  </main>
+</template>
+
+<script>
+import PaginationComponent from "./PaginationComponent.vue";
+import { PER_PAGE } from "../constants";
+
+export default {
+  name: "OnePageWithAlbums",
+  components: {
+    PaginationComponent,
+  },
+  data() {
+    return {
+      pageNum: 1,
+      albums: [],
+    };
+  },
+  methods: {
+    setPageNum(pageNum) {
+      this.pageNum = pageNum;
+    },
+  },
+  computed: {
+    slicedList() {   //TODO: move method to helper
+      return this.albums.slice(
+        PER_PAGE * (this.pageNum - 1),
+        this.pageNum * PER_PAGE
+      );
+    },
+  },
+  mounted() {
+    this.$apiService.getAlbums().then((albums) => (this.albums = albums));
+  },
+};
+</script>
