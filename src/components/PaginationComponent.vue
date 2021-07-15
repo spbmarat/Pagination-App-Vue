@@ -1,11 +1,12 @@
 <template>
-  <div class="jumbotron text-center">
+  <div class="jumbotron text-center" :on="setPages()">
     <button
       type="button"
       v-for="pageNumber in pages"
       v-bind:key="pageNumber.id"
-      :class="getButtonClassAndActiveButton(pageNumber)"
-      @click="this.$emit('childToParentPageNumber', pageNumber)"
+      class="btn btn-sm"
+      :class="[isPressed(pageNumber) ? 'pressed' : 'btn-outline-secondary']"
+      @click="emitNewActivePageFromPagination(pageNumber)"
     >
       {{ pageNumber }}
     </button>
@@ -17,36 +18,26 @@ import { PER_PAGE } from "../constants";
 export default {
   name: "PaginationComponent",
   props: {
-    pageNumToRender: Number,
-    listForPagination: Object,
+    activePage: Number,
+    lengthOfListForPagination: Number,
   },
-  emits: ["childToParentPageNumber"],
+  emits: ["newActivePageFromPagination"],
   data() {
     return {
-      isPressed: [],
       pages: [],
     };
   },
   methods: {
     setPages() {
-      let numberOfPages = Math.ceil(this.listForPagination.length / PER_PAGE);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
+      let numberOfPages = Math.ceil(this.lengthOfListForPagination / PER_PAGE);
+      this.pages = Array.from({ length: numberOfPages }, (_, i) => i + 1);
     },
-    getButtonClassAndActiveButton(index) {
-      if (index == this.pageNumToRender) {
-        return "btn btn-sm pressed";
-      } else {
-        return "btn btn-sm btn-outline-secondary";
-      }
+    emitNewActivePageFromPagination(pageNumber) {
+      this.$emit("newActivePageFromPagination", pageNumber);
+    },
+    isPressed(index) {
+      return index === this.activePage;
     },
   },
-  watch: {
-    listForPagination() {
-      this.setPages();
-    },
-  },
-  mounted() {},
 };
 </script>

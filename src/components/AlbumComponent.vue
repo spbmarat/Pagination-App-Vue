@@ -32,9 +32,9 @@
       </div>
     </div>
     <PaginationComponent
-      :pageNumToRender="this.pageNum"
-      :listForPagination="this.photos"
-      @childToParentPageNumber="setPageNum($event)"
+      :activePage="this.pageNum"
+      :lengthOfListForPagination="this.photos.length"
+      @newActivePageFromPagination="setPageNum($event)"
     />
   </main>
 </template>
@@ -70,10 +70,10 @@ export default {
       );
     },
   },
+  // TODO: move photo logic to PhotoComponent
   mounted() {
-    this.$apiService.resetPhotos();
     this.$apiService
-      .getPhotos(this.albumNum)
+      .getPhotos(this.albumNum, true)
       .then((photos) => (this.photos = photos));
   },
 };

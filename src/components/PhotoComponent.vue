@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: "Photo",
   props: {
     photoNum: String,
     photoUrl: String,

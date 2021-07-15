@@ -28,23 +28,22 @@
       </div>
     </div>
     <PaginationComponent
-      :pageNumToRender="this.pageNum"
-      :listForPagination="this.albums"
-      @childToParentPageNumber="setPageNum($event)"
+      :activePage="this.pageNum"
+      :lengthOfListForPagination="this.albums.length"
+      @newActivePageFromPagination="setPageNum($event)"
     />
   </main>
 </template>
 
 <script>
-import PaginationComponent from "../components/PaginationComponent.vue";
+import PaginationComponent from "./PaginationComponent.vue";
 import { PER_PAGE } from "../constants";
 
 export default {
-  name: "Alc",
+  name: "OnePageWithAlbums",
   components: {
     PaginationComponent,
   },
-  emits: ["childToParentAlbumNumber"],
   data() {
     return {
       pageNum: 1,
@@ -52,12 +51,12 @@ export default {
     };
   },
   methods: {
-    setPageNum(pagenum) {
-      this.pageNum = pagenum;
+    setPageNum(pageNum) {
+      this.pageNum = pageNum;
     },
   },
   computed: {
-    slicedList() {
+    slicedList() {   //TODO: move method to helper
       return this.albums.slice(
         PER_PAGE * (this.pageNum - 1),
         this.pageNum * PER_PAGE

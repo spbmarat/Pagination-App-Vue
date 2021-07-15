@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 export default class ApiService {
-  baseUrl = "https://jsonplaceholder.typicode.com/";
 
-  constructor() {
+  constructor(url) {
+    this.url = url;
     this.albums = [];
     this.photos = [];
   }
@@ -14,7 +14,7 @@ export default class ApiService {
       });
     }
     else {
-      return fetch(this.baseUrl + "albums")
+      return fetch(this.url + "albums")
         .then((response) => {
           return response.json();
         })
@@ -22,20 +22,23 @@ export default class ApiService {
           this.albums = albums;
           return albums
         })
-        .catch((response) => {
+        .catch((response) => {    // TODO: add global error handling 
           console.log(response);
         });
     }
   }
 
-  getPhotos(albumnum) {
+  getPhotos(albumNum, skipCache) {
+    if (skipCache) {
+      this.photos = [];
+    }
     if (this.photos.length) {
       return new Promise((resolve) => {
         resolve(this.photos);
       });
     }
     else {
-      return fetch(this.baseUrl + "albums/" + albumnum + "/photos")
+      return fetch(this.url + "albums/" + albumNum + "/photos")
         .then((response) => {
           return response.json();
         })
@@ -43,12 +46,9 @@ export default class ApiService {
           this.photos = photos;
           return photos
         })
-        .catch((response) => {
+        .catch((response) => {    // TODO: add global error handling 
           console.log(response);
         });
     }
-  }
-  resetPhotos() {
-    this.photos = [];
   }
 }
